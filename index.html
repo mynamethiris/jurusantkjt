@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda</title>
+    <link rel="icon" type="image/x-icon" href="tkjt.png">
+    <style>
+        /* Terapkan box-sizing border-box agar padding tidak menambah lebar */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        /* Global styles */
+        body {
+            font-family: 'Arial', Ubuntu, Segoe UI;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #fefefe;
+            color: #1e1e1e;
+            transition: all 0.2s linear;
+        }
+
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: #fefefe;
+        }
+
+        /* Dark mode toggle styles */
+        #themeToggle {
+            transition: color 0.2s linear;
+            color: #1e1e1e;
+        }
+
+        .dark-mode #themeToggle {
+            color: #fefefe;
+        }
+
+        #themeIcon {
+            transition: all 0.2s linear;
+            filter: grayscale(1);
+        }
+
+        #themeToggle:hover #themeIcon {
+            transform: translateX(-2px);
+        }
+
+        .dark-mode #themeIcon {
+            filter: invert(1);
+        }
+
+        /* Header styles */
+        header {
+            background: #ffffff;
+            color: #1e1e1e;
+            min-height: 80px;
+            padding: 20px;
+            border-radius: 0px 0px 8px 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s linear;
+        }
+
+        .dark-mode header {
+            background: #222222;
+            color: #fefefe;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-evenly;
+            width: 80%;
+            margin: auto;
+            gap: 10px;
+        }
+
+        @media (max-width: 800px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        /* Logo styles */
+        .logo {
+            transition: all 0.2s linear;
+            margin: 5px;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo img {
+            width: 80px;
+            height: 80px;
+        }
+
+        @media (max-width: 800px) {
+            .logo {
+                visibility: hidden;
+                width: 0;
+                height: 0;
+            }
+        }
+
+        /* Title styles */
+        .title-text h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #1e1e1e;
+        }
+
+        .title-text p {
+            margin: 4px 0 0 0;
+            font-size: 1rem;
+            color: #1e1e1e;
+        }
+
+        .dark-mode .title-text h1 {
+            color: #fefefe;
+        }
+
+        .dark-mode .title-text p {
+            color: #fefefe;
+        }
+
+        /* Navigation styles */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            padding-top: 15px;
+        }
+
+        nav a {
+            color: #1e1e1e;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.2s linear;
+        }
+
+        .dark-mode nav a {
+            color: #fefefe;
+        }
+
+        nav a:hover {
+            color: #676460;
+        }
+
+        .dark-mode nav a:hover {
+            color: #c9c9c8;
+        }
+
+        @media (max-width: 800px) {
+            nav ul {
+                flex-direction: column;
+                padding: 0;
+                gap: 10px;
+                width: 100%;
+            }
+
+            nav a {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Container styles */
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .flex-container {
+            display: flex;
+            width: 80%;
+            margin: auto;
+            gap: 20px;
+        }
+
+        @media (max-width: 800px) {
+            .flex-container {
+                display: grid;
+                gap: 0px;
+            }
+        }
+
+        /* Content styles */
+        .content {
+            flex: 1;
+            padding: 20px;
+            background: #ffffff;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s linear;
+        }
+
+        .dark-mode .content {
+            background: #222222;
+        }
+
+        .content:hover {
+            background: #fafafb;
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .content:hover {
+            background: #1f1f20;
+        }
+
+        .content p {
+            color: #676460;
+        }
+
+        .dark-mode .content p {
+            color: #c9c9c8;
+        }
+
+        /* Shine animation */
+        .shine {
+            position: relative;
+            display: inline-block;
+        }
+
+        .shine::before {
+            content: "";
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background-color: rgba(244, 244, 244, 0.5);
+            left: -1250px;
+            transform: skewX(-30deg);
+        }
+
+        .dark-mode .shine::before {
+            background-color: rgba(45, 45, 48, 0.5);
+        }
+
+        .shine:hover:hover::before {
+            animation: slide 1s;
+        }
+
+        @media (max-width: 800px) {
+            .shine:hover:hover:before {
+                animation: slide 2s;
+            }
+        }
+
+        @keyframes slide {
+
+            0%,
+            100% {
+                left: -1250px;
+            }
+
+            50% {
+                left: 100%;
+            }
+        }
+
+        /* Content styles */
+        .box-content {
+            flex: 1;
+            padding: 20px;
+            background: #f3f4f6;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s linear;
+        }
+
+        .box-content p {
+            color: #676460;
+        }
+
+        .dark-mode .box-content p {
+            color: #c9c9c8;
+        }
+
+        .dark-mode .box-content {
+            background: #28292a;
+        }
+
+        .box-content:hover {
+            background: #ffffff;
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .box-content:hover {
+            background: #222222;
+        }
+
+        /* FAQ styles */
+        .faq-item {
+            background: #eceff1;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s linear;
+        }
+
+        .dark-mode .faq-item {
+            background: #28292a;
+        }
+
+        .faq-item:hover {
+            background: #ffffff;
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .faq-item:hover {
+            background: #222222;
+        }
+
+        .faq-question {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+            user-select: none;
+        }
+
+        @media (max-width: 800px) {
+            .faq-question {
+                padding: 25px 20px;
+            }
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 15px;
+            top: 5px;
+            font-size: 1.5em;
+            transition: transform 0.2s linear;
+        }
+
+        .faq-question.active::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            background: #f3f4f6;
+            transition: max-height 0.2s linear;
+        }
+
+        .dark-mode .faq-answer {
+            background: #2d2d30;
+        }
+
+        .faq-answer p {
+            margin: 15px 0;
+        }
+
+        /* Footer styles */
+        footer {
+            background: #ffffff;
+            color: #1e1e1e;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px 8px 0px 0px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s linear;
+        }
+
+        .dark-mode footer {
+            background: #222222;
+            color: #fefefe;
+        }
+
+        footer a {
+            transition: all 0.2s linear;
+        }
+
+        footer img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .dark-mode footer img {
+            filter: invert(1);
+        }
+
+        footer .container>div a:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 800px) {
+            footer .container>div {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            footer img,
+            footer span {
+                display: flex;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="Pictures/tkjt.png" />
+            </div>
+            <div class="title-text">
+                <h1>#AyoMasukTKJT</h1>
+                <p>SMK Ananda Mitra Industri Deltamas</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="gallery.html">Galeri</a></li>
+                    <li><a href="#faq"
+                            onclick="event.preventDefault(); document.querySelector('#faq').scrollIntoView({ behavior: 'smooth' });">FAQ</a>
+                    </li>
+                    <li>
+                        <button id="themeToggle"
+                            style="display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; font-weight: 600; font-size: 1.1rem; padding: 2px;">
+                            <img id="themeIcon" src="Pictures/light.svg" alt="Mode Terang"
+                                style="width:24px; height:24px;" />
+                            <span id="themeText">Mode Terang</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container content">
+        <div class="shine" style="width: 100%;"
+            onclick="window.location.href='https://smkind-deltamas.sch.id/'">
+            <img src="Pictures/smk-ami.png" alt="SMK Ananda Mitra Industri Deltamas"
+                style="width: 100%; height: 100%; margin-top: 5px; border-radius: 8px; cursor: pointer;" />
+        </div>
+    </div>
+
+    <div class="container content">
+        <div style="text-align: center;">
+            <h2>💡 Tentang Jurusan TKJT</h2>
+            <p>
+                Jurusan Teknik Komputer Jaringan dan Telekomunikasi (TKJT) merupakan pilihan strategis bagi siswa yang
+                ingin terjun ke dunia teknologi informasi dan komunikasi. Di sini, siswa belajar memahami arsitektur
+                jaringan komputer, sistem telekomunikasi, serta pengelolaan data dan perangkat keras. Dengan kurikulum
+                yang terus diperbarui sesuai perkembangan industri, TKJT menjadi wadah ideal untuk membentuk generasi
+                digital yang cerdas dan kompeten.
+            </p>
+        </div>
+    </div>
+
+    <div class="flex-container">
+        <div style="text-align: center;" class="content">
+            <h3>🔧 Pembelajaran Berbasis Industri</h3>
+            <p>
+                TKJT di SMK Ananda Mitra Industri Deltamas mengusung pendekatan pembelajaran berbasis praktik dan proyek
+                nyata. Siswa tidak hanya belajar teori di kelas, tetapi juga langsung mengaplikasikan pengetahuan mereka
+                melalui simulasi jaringan, instalasi perangkat, dan troubleshooting sistem. Didukung oleh fasilitas
+                laboratorium modern dan kerja sama dengan mitra industri, siswa TKJT dibekali pengalaman kerja sejak
+                dini yang relevan dengan kebutuhan dunia usaha dan dunia industri (DU/DI).
+            </p>
+        </div>
+        <div style="text-align: center;" class="content">
+            <h3>🚀 Peluang Karier dan Masa Depan</h3>
+            <p>
+                Lulusan TKJT memiliki prospek karier yang luas di bidang IT support, network administrator, teknisi
+                telekomunikasi, hingga pengembang sistem jaringan. Selain itu, mereka juga memiliki bekal untuk
+                melanjutkan pendidikan ke jenjang yang lebih tinggi di bidang teknik informatika, sistem komputer, atau
+                rekayasa jaringan. Dengan fondasi keterampilan yang kuat dan sertifikasi kompetensi yang diakui, alumni
+                TKJT siap bersaing di era digital dan menjadi bagian dari transformasi teknologi nasional.
+            </p>
+        </div>
+    </div>
+
+    <div class="container content">
+        <div style="text-align: center;">
+            <h2>👨‍🎓 Spesialisasi Jurusan TKJT</h2>
+            <p>
+                Jurusan Teknik Komputer Jaringan dan Telekomunikasi (TKJT) memiliki beberapa spesialisasi yang menarik untuk dipelajari. 
+                Berikut adalah beberapa spesialisasi yang dapat kamu pilih:
+            </p>
+
+            <div style="width: 100%;" class="flex-container">
+                <div style="text-align: center; " class="box-content">
+                    <h3>🎨 Desain Komunikasi Visual</h3>
+                    <p>
+                        Mempelajari berbagai hal tentang membuat pesan visual yang efektif dan menarik. Pada
+                        spesialisasi ini
+                        kamu dapat mempelajari berbagai keterampilan dalam merancang elemen visual seperti logo, poster,
+                        buku,
+                        website, dan materi promosi lainnya, menggunakan media aplikasi.
+                    </p>
+                </div>
+                <div style="text-align: center;" class="box-content">
+                    <h3>⚙️ Software Engineering</h3>
+                    <p>
+                        Mempelajari berbagai hal tentang pengembangan perangkat lunak secara sistematis, Pada
+                        spesialisasi ini,
+                        dapat mendalami konsep dasar, teknologi, dan metodologi untuk menciptakan perangkat lunak
+                        berkualitas
+                        tinggi.
+                    </p>
+                </div>
+                <div style="text-align: center;" class="box-content">
+                    <h3>🖥️ Jaringan Komputer Telekomunikasi</h3>
+                    <p>
+                        Mempelajari berbagai hal untuk membuat jaringan, baik itu jaringan Akses Kabel (Tembaga,
+                        Coaxial, Fiber
+                        Optik) maupun Nirkabel (Radio, Gelombang Mikro).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="faq" class="container content">
+        <h2 style="text-align:center;">FAQ - Pertanyaan yang Sering Diajukan</h2>
+        <div class="faq-item">
+            <div class="faq-question">Apa itu TKJT?</div>
+            <div class="faq-answer">
+                <p>TKJT(Teknik Komputer Jaringan dan Telekomunikasi) adalah ilmu berbasis Teknologi Informasi dan
+                    Komunikasi terkait kemampuan algoritma, dan pemrograman komputer, perakitan komputer, perakitan
+                    jaringan komputer, dan pengoperasian perangkat lunak, dan internet. Teknik komputer, dan jaringan
+                    juga membutuhkan pemahaman di bidang teknik listrik, dan ilmu komputer sehingga mampu mengembangkan,
+                    dan mengintegrasikan perangkat lunak, dan perangkat keras.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apa manfaat mengikuti jurusan TKJT?</div>
+            <div class="faq-answer">
+                <p>Dengan mengambil jurusan TKJT, kamu bisa belajar mengenai jaringan komputer, lengkap dengan berbagai
+                    macam topologinya. Misal seperti server, IP address, sampai jaringan lokal. Kamu juga mempelajari
+                    secara detail mengenai sistem operasi. Bahkan, kamu juga bisa belajar mengenai instalasi OS, sistem
+                    kerja user, hingga belajar mengenai partisi.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apakah jurusan TKJT memerlukan kemampuan khusus?</div>
+            <div class="faq-answer">
+                <p>Tidak ada kemampuan khusus yang wajib, namun minat dan ketertarikan pada teknologi, logika, dan
+                    pemecahan masalah sangat membantu.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apa saja fasilitas pendukung yang ada di SMK Ananda Mitra Industri Deltamas untuk
+                jurusan TKJT?</div>
+            <div class="faq-answer">
+                <ul>
+                    <li>Komputer/laptop untuk siswa (biasanya 1 siswa 1 PC).</li>
+                    <li>Komputer server (untuk praktik jaringan, hosting, virtualisasi).</li>
+                    <li>Monitor tambahan / LCD projector.</li>
+                    <li>Perangkat Jaringan.</li>
+                    <li>Router (misalnya Cisco, Mikrotik).</li>
+                    <li>Switch (manageable / unmanageable).</li>
+                    <li>Hub.</li>
+                    <li>Access Point / Wireless Router.</li>
+                    <li>Modem dan perangkat internet.</li>
+                    <li>Media Jaringan.</li>
+                    <li>Kabel UTP, STP, dan Fiber Optik.</li>
+                    <li>RJ-45 konektor.</li>
+                    <li>Patch panel dan Keystone jack.</li>
+                    <li>Kabel tester dan LAN tester.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apakah ada praktek kerja lapangan (PKL)?</div>
+            <div class="faq-answer">
+                <p>Ya, siswa TKJT akan mengikuti praktek kerja lapangan (PKL) di perusahaan untuk mendapatkan pengalaman
+                    kerja nyata.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Apa saja materi yang dipelajari?</div>
+            <div class="faq-answer">
+                <ul>
+                    <li>Keselamatan dan Kesehatan Kerja (K3).</li>
+                    <li>Alat Ukur Presisi.</li>
+                    <li>Dasar Teknik Komputer Jaringan Telekomunikasi.</li>
+                    <li>Dasar Hardware dan Software Komputer.</li>
+                    <li>Merakit dan Perawatan Komputer.</li>
+                    <li>Instalasi Jaringan LAN dan WAN.</li>
+                    <li>Troubleshooting/Perbaikan.</li>
+                    <li>Desain Grafis.</li>
+                    <li>Penggunaan Perangkat Lunak Jaringan.</li>
+                    <li>Produk Kreatif dan Kewirausahaan.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div style="display: flex; gap: 10px; font-weight: 400; font-size: 1.1rem;">
+                <a href="https://www.instagram.com/smkami_deltamas" style="text-decoration: none; color: inherit;">
+                    <span style="display: flex; align-items: center;">
+                        <img src="Pictures/instagram.svg" />
+                        <label style="margin-left: 5px;">@smkami_deltamas</label>
+                    </span>
+                </a>
+                <a href="https://www.instagram.com/tkjtamideltamas15" style="text-decoration: none; color: inherit;">
+                    <span style="display: flex; align-items: center;">
+                        <img src="Pictures/instagram.svg" />
+                        <label style="margin-left: 5px;">@tkjtamideltamas15</label>
+                    </span>
+                </a>
+            </div>
+            <p>SMK Ananda Mitra Industri Deltamas, <b>Luar Biasa.</b></p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const themeTextTransition = getComputedStyle(themeText).transition;
+
+        themeText.style.opacity = 0;
+        themeToggle.addEventListener('mouseover', () => {
+            themeText.style.transition = 'opacity 0.2s linear';
+            themeText.style.opacity = 1;
+        });
+        themeToggle.addEventListener('mouseleave', () => {
+            themeText.style.transition = 'opacity 0.2s linear';
+            themeText.style.opacity = 0;
+        });
+
+        function DarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.src = 'Pictures/dark.svg';
+                themeIcon.alt = 'Mode Gelap';
+                themeText.textContent = 'Mode Gelap';
+            } else {
+                themeIcon.src = 'Pictures/light.svg';
+                themeIcon.alt = 'Mode Terang';
+                themeText.textContent = 'Mode Terang';
+            }
+        }
+
+        // Menggunakan local storage untuk menyimpan mode gelap
+        if (localStorage.getItem('darkMode') === 'true') {
+            DarkMode();
+        }
+
+        themeToggle.addEventListener('click', DarkMode);
+
+        // FAQ toggle
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+                const answer = question.nextElementSibling;
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
