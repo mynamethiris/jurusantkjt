@@ -7,7 +7,7 @@
     <title>Galeri</title>
     <link rel="icon" type="image/x-icon" href="tkjt.png">
     <style>
-        /* Terapkan box-sizing border-box agar padding tidak menambah lebar */
+        /* Set box-sizing for all elements */
         *,
         *::before,
         *::after {
@@ -55,7 +55,7 @@
 
         /* Header styles */
         header {
-            background: #ffffff;
+            background: #fff;
             color: #1e1e1e;
             min-height: 80px;
             padding: 20px;
@@ -206,7 +206,7 @@
         .content {
             flex: 1;
             padding: 20px;
-            background: #ffffff;
+            background: #fff;
             margin-top: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -215,6 +215,14 @@
 
         .dark-mode .content {
             background: #222222;
+        }
+
+        .content p {
+            color: #676460;
+        }
+
+        .dark-mode .content p {
+            color: #c9c9c8;
         }
 
         .content:hover {
@@ -227,12 +235,12 @@
             background: #242425;
         }
 
-        /* Hide the images by default */
+        /* Slideshow container */
         .slider {
             display: none;
         }
 
-        /* Next & previous buttons */
+        /* Next & previous slides buttons */
         .prev,
         .next {
             cursor: pointer;
@@ -253,7 +261,6 @@
             background-color: rgba(34, 34, 34, 0.5);
         }
 
-        /* Position the "next button" to the right */
         .next {
             right: -5px;
             border-radius: 3px 0 0 3px;
@@ -264,7 +271,6 @@
             border-radius: 0 3px 3px 0;
         }
 
-        /* On hover, add a black background color with a little bit see-through */
         .prev:hover,
         .next:hover {
             color: #1e1e1e;
@@ -277,7 +283,7 @@
             background-color: #242425;
         }
 
-        /* Fading animation */
+        /* Slideshow fading animation */
         .fade {
             animation-name: fade;
             animation-duration: 1.5s;
@@ -295,7 +301,7 @@
 
         /* Footer styles */
         footer {
-            background: #ffffff;
+            background: #fff;
             color: #1e1e1e;
             margin-top: 20px;
             padding: 20px;
@@ -339,16 +345,71 @@
                 align-items: center;
             }
         }
+
+        /* Pop-up (Modal) Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            animation-name: zoom;
+            animation-duration: 0.5s;
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0.1)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        /* Pop-up (Modal) close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <div class="container header-container" style="width: 80%">
-            <div class="logo">
+            <div class="logo"
+                onclick="this.clickCount = this.clickCount || 0; this.clickCount++; if (this.clickCount === 2) { window.location.href = 'https://github.com/mynamethiris/jurusantkjt'; }">
                 <img src="Pictures/tkjt.png" />
             </div>
-            <div class="title-text">
+            <div class="title-text" style="margin-right: 5%;">
                 <h1>#AyoMasukTKJT</h1>
                 <p>SMK Ananda Mitra Industri Deltamas</p>
             </div>
@@ -443,17 +504,12 @@
         <div class="container content">
             <img src="Pictures/akmal.jpg"
                 style="display: block; width: 100%; height: 30%; margin-top: 5px; border-radius: 8px;" />
-            <h3 style="text-align: center; margin: 5px;">Andante Akmal Alvaro</h3>
+            <h3 style="text-align: center; margin: 5px;">Andante Akmal Alvaro<br>(Murid TKJT 1)</h3>
         </div>
         <div class="container content">
             <img src="Pictures/favian.jpg"
                 style="display: block; width: 100%; height: 30%; margin-top: 5px; border-radius: 8px;" />
-            <h3 style="text-align: center; margin: 5px;">Favian Zufar Niardi</h3>
-        </div>
-        <div class="container content">
-            <img src="Pictures/rifat.jpg"
-                style="display: block; width: 100%; height: 30%; margin-top: 5px; border-radius: 8px;" />
-            <h3 style="text-align: center; margin: 5px;">Rifat Ardito</h3>
+            <h3 style="text-align: center; margin: 5px;">Favian Zufar Niardi<br>(Murid TKJT 1)</h3>
         </div>
     </div>
 
@@ -476,6 +532,12 @@
             <p>SMK Ananda Mitra Industri Deltamas, <b>Luar Biasa.</b></p>
         </div>
     </footer>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
 
     <script>
         // Dark Mode
@@ -528,6 +590,14 @@
             showSlides(1, 1);
             showSlides(2, 1);
             showSlides(3, 1);
+
+            // Make images inside .content and .slider clickable for modal
+            document.querySelectorAll('.content img, .slider img').forEach(img => {
+                img.style.cursor = 'pointer'; // Indicate that images are clickable
+                img.addEventListener('click', function () {
+                    openModal(this);
+                });
+            });
         });
 
         // Next/previous controls for a specific slider
@@ -556,6 +626,31 @@
 
             slides[slideIndex[sliderId] - 1].style.display = "block";
         }
+
+        // Modal (Pop-up) Logic
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("img01");
+
+        function openModal(imgElement) {
+            modal.style.display = "flex"; // Use flex to center content
+            modalImg.src = imgElement.src;
+            // Use alt text or the text content of the next sibling (for slider captions)
+            captionText.innerHTML = imgElement.alt || imgElement.nextElementSibling?.textContent || '';
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        // Close modal when clicking on the close button
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
     </script>
 </body>
 
